@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { tradParameters } from './trad.parameters';
 
 export class factParameters {
     @ApiProperty()
-    title: string;
+    title: tradParameters;
 
     @ApiProperty()
-    content: string;
+    content: tradParameters;
 }

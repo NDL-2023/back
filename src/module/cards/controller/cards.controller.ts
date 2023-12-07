@@ -20,9 +20,12 @@ export class CardsController {
     }
 
     @Get('page?')
-    async findPage(@Query('page') page: number): Promise<cardsParameters[]> {
-        console.log(page);
+    async findPage(@Query('page') page: number, @Query('lang') lang: string): Promise<cardsParameters[]> {
         let page_find = await this.factService.getPage(page);
+        for (let i = 0; i < page_find.length; i++) {
+            page_find[i].title = page_find[i].title[lang];
+            page_find[i].content = page_find[i].content[lang];
+        }
         return page_find;
     }
 }

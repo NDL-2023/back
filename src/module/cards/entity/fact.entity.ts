@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Trad } from './trad.entity'; // Assuming your Trad entity is in the same directory
 
 @Entity()
 export class Fact {
@@ -7,10 +8,11 @@ export class Fact {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ApiProperty()
-    @Column({unique: true})
-    title: string;
+    @OneToOne(() => Trad, { eager: true , cascade: true }) // Many-to-one relationship for both French and English translations
+    @JoinColumn({name:'title'})
+    title: Trad;
 
-    @Column()
-    content: string
+    @OneToOne(() => Trad, { eager: true , cascade: true })// Many-to-one relationship for both French and English translations
+    @JoinColumn({name:'content'})
+    content: Trad;
 }
