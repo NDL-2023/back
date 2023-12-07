@@ -8,7 +8,7 @@ import { Trad } from "./entity/trad.entity";
 @Module({
     imports: [TypeOrmModule.forFeature([Fact,Trad])],
     controllers: [CardsController],
-    providers: [FactService],
-    exports: [FactService]
+    providers: [FactService ],
+    exports: [FactService ]
 })
 export class CardsModule {}

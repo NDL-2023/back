@@ -8,12 +8,11 @@ export class Fact {
     @PrimaryGeneratedColumn()
     id: number;
 
-
     @OneToOne(() => Trad, { eager: true , cascade: true }) // Many-to-one relationship for both French and English translations
-    @JoinColumn({name:'id'})
+    @JoinColumn({name:'title'})
     title: Trad;
 
     @OneToOne(() => Trad, { eager: true , cascade: true })// Many-to-one relationship for both French and English translations
-    @JoinColumn({name:'id'})
+    @JoinColumn({name:'content'})
     content: Trad;
 }

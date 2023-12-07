@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { tradParameters } from './trad.parameters';
 
 enum Type {
     FACT = 'fact',
@@ -7,10 +8,10 @@ enum Type {
 
 export class cardsParameters {
     @ApiProperty()
-    title: string;
+    title: tradParameters;
 
     @ApiProperty()
-    content: string;
+    content: tradParameters;
 
     @ApiProperty()
     type: Type;
@@ -20,30 +21,4 @@ export class cardsParameters {
 
     @ApiProperty()
     explanation?: string;
-}
-
-export class createCardsParameters {
-    @ApiProperty()
-    titleFr: string;
-
-    @ApiProperty()
-    titleEn: string;
-
-    @ApiProperty()
-    contentFr: string;
-
-    @ApiProperty()
-    contentEn: string;
-
-    @ApiProperty()
-    type: Type;
-
-    @ApiProperty()
-    isTrue?: boolean;
-
-    @ApiProperty()
-    explanationFr?: string;
-
-    @ApiProperty()
-    explanationEn?: string;
 }
