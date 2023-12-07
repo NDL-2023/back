@@ -2,6 +2,8 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Fact } from "../entity/fact.entity";
 import { Repository } from "typeorm";
+import { cardsParameters } from "../dtos/cards-parameters";
+import { factParameters } from "../dtos/fact-parameters";
 
 @Injectable()
 export class FactService {
@@ -10,7 +12,7 @@ export class FactService {
         private factsRepository: Repository<Fact>,
     ) {}
 
-    async create(fact: Fact): Promise<Fact> {
+    async create(fact: factParameters): Promise<Fact> {
         let fact_exist = await this.factsRepository.findOneBy({title: fact.title});
         if (fact_exist) {
             throw new HttpException('Fact already exist', HttpStatus.NOT_ACCEPTABLE);
@@ -19,11 +21,11 @@ export class FactService {
     }
 
     async findOne(title: string): Promise<Fact> {
-        let card = await this.factsRepository.findOneBy({title});
-        if (!card) {
+        let fact = await this.factsRepository.findOneBy({title});
+        if (!fact) {
             throw new HttpException('Fact not found', HttpStatus.NOT_FOUND);
         }
-        return card;
+        return fact;
     }
 
     async findAll(): Promise<Fact[]> {
