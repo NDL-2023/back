@@ -5,6 +5,7 @@ import { configService } from './config/config.service';
 import { HttpModule } from '@nestjs/axios';
 import { CommonModule } from './common/common.module';
 import { AuthModule } from './module/auth/auth.module';
+import { CardsModule } from './module/cards/cards.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { AuthModule } from './module/auth/auth.module';
     HttpModule,
     AuthModule,
     CommonModule,
+    CardsModule
   ],
   controllers: [AppController],
   providers: [],
