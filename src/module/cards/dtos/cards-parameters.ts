@@ -1,11 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-enum Type {
+export enum TypeCard {
     FACT = 'fact',
-    QUESTION = 'question'
+    QUESTION = 'question',
+    TOPIC = 'topic'
 }
 
 export class cardsParameters {
+    @ApiProperty()
+    id: number;
+
     @ApiProperty()
     title: string;
 
@@ -13,7 +17,7 @@ export class cardsParameters {
     content: string;
 
     @ApiProperty()
-    type: Type;
+    type: TypeCard;
 
     @ApiProperty()
     isTrue?: boolean;
