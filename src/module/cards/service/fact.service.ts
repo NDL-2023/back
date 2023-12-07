@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Fact } from "../entity/fact.entity";
 import { Repository } from "typeorm";
-import { cardsParameters } from "../dtos/cards-parameters";
+import { TypeCard, cardsParameters } from "../dtos/cards-parameters";
 import { factParameters } from "../dtos/fact-parameters";
 
 @Injectable()
@@ -30,5 +30,17 @@ export class FactService {
 
     async findAll(): Promise<Fact[]> {
         return this.factsRepository.find();
+    }
+
+    async getPage(page: number): Promise<cardsParameters[]> {
+        let fact_find = await this.factsRepository.find({ 
+            take: 10,
+            skip: 10 * (page - 1),
+        }) as cardsParameters[];
+        for (let i = 0; i < fact_find.length; i++) {
+            fact_find[i].type = TypeCard.FACT;
+        }
+        return fact_find
+           
     }
 }
