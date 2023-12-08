@@ -9,11 +9,6 @@ export class topicParameters {
     @ApiProperty()
     content: string;
 
-    // @ApiProperty()
-    // author: UserDto;
-
-    @ApiProperty()
-    replies?: replyParameters[];
 }
 
 export class topicParametersWithAuthor extends topicParameters {

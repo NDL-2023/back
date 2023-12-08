@@ -4,6 +4,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Topic } from "../entity/topic.entity";
 import { Repository } from "typeorm";
 import { topicParameters, topicParametersWithAuthor } from "../dtos/topic-parameters";
+import { replyParameters, replyParametersWithAuthor } from "../dtos/reply-parameters";
+import { Reply } from "../entity/reply.entity";
 
 @Injectable()
 export class TopicService {
@@ -18,5 +20,13 @@ export class TopicService {
             throw new HttpException('Topic already exist', HttpStatus.NOT_ACCEPTABLE);
         }
         return this.topicRepository.save(topic)
+    }
+    
+    async findOne(id: number){
+        return this.topicRepository.findOneBy({id: id})
+    }
+
+    async findAll(){
+        return this.topicRepository.find()
     }
 }

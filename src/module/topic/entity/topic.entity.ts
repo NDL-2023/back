@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { User } from "../../user/entity/user.entity";
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Reply } from "./reply.entity";
 
 @Entity()
@@ -16,11 +16,7 @@ export class Topic {
     @Column()
     content: string;
 
-    @OneToOne(() => User, { eager: true , cascade: true })
+    @ManyToOne(() => User, (user) => user.id)
     @JoinColumn({name: 'author'})
     author: User;
-
-    @OneToMany(() => Reply, (reply) => reply.topic)
-    @JoinColumn({name: 'replies'})
-    replies: Reply[];
 }
