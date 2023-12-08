@@ -21,5 +21,5 @@ export class cardsParameters {
     isTrue?: boolean;
 
     @ApiProperty()
-    explanation?: string;
+    explanation?: tradParameters;
 }
