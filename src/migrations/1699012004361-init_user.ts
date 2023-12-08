@@ -7,6 +7,7 @@ export class InitUser1699012004361 implements MigrationInterface {
       `CREATE TABLE "user" (
                 "id" SERIAL NOT NULL,
                 "login" VARCHAR(255) NOT NULL,
+                "isAdmin" BOOLEAN NOT NULL DEFAULT false,
                 "password" VARCHAR(255) NOT NULL
             );`,
     );
