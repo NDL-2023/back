@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Trad } from './trad.entity'; // Assuming your Trad entity is in the same directory
 
 @Entity()
@@ -19,4 +19,7 @@ export class Intox {
     @OneToOne(() => Trad, { eager: true , cascade: true })// Many-to-one relationship for both French and English translations
     @JoinColumn({name:'explanation'})
     explanation: Trad;
+
+    @Column()
+    isTrue: boolean;
 }
