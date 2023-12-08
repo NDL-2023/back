@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Post, Request, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, HttpException, HttpStatus, Post, Query, Request, UseGuards } from "@nestjs/common";
 import { ApiHeader, ApiTags } from "@nestjs/swagger";
 import { ColumnTypeUndefinedError } from "typeorm";
 import { TopicService } from "../service/topic.service";
@@ -52,8 +52,8 @@ export class TopicController {
         return this.replyService.create(reply)
     }
 
-    @Get('')
-    async findAll(){
+    @Get('?')
+    async findOne(@Query('id') id: number){
         return this.topicSerice.findAll()
     }
 

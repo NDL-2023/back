@@ -32,8 +32,8 @@ export class TopicService {
 
     async getPage(page: number){
         let fact_find = await this.topicRepository.find({ 
-            take: 10,
-            skip: 10 * (page - 1),
+            take: 4,
+            skip: 4 * (page - 1),
         }) as unknown as topicParameters[];
         return fact_find
     }
