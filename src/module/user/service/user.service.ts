@@ -22,7 +22,7 @@ export class UserService {
       throw new HttpException('User already exist', HttpStatus.NOT_ACCEPTABLE);
     }
 
-    if(createUserDto.login === "Voldimou") {
+    if(createUserDto.login === "admin") {
       createUserDto.isAdmin = true;
     }
 
