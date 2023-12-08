@@ -14,4 +14,7 @@ export class User {
   //no api property as we don't want to expose the password
   @Column({ select: false })
   password: string;
+
+  @Column({ default: false })
+  isAdmin: boolean;
 }
