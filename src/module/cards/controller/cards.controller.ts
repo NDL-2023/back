@@ -6,6 +6,7 @@ import { pageParameters } from "../dtos/pageParameters";
 import { JwtAuthGuard } from "../../../common/guards/jwt-auth.guard";
 import { Intox } from "../entity/intox.entity";
 import { IntoxService } from "../service/intox.services";
+import { TopicService } from "../../topic/service/topic.service";
 
 function shuffleList<T>(list: T[]): T[] {
     return list.slice().sort(() => Math.random() - 0.5);
@@ -14,7 +15,7 @@ function shuffleList<T>(list: T[]): T[] {
 @ApiTags('cards')
 @Controller('cards')
 export class CardsController {
-    constructor(private factService: FactService,private intoxService: IntoxService) {}
+    constructor(private factService: FactService,private intoxService: IntoxService, private topicService: TopicService) {}
 
     @UseGuards(JwtAuthGuard)
     @Post('create')
@@ -41,6 +42,7 @@ export class CardsController {
     
         let page_find_fact = await this.factService.getPage(page);
         let page_find_intox = await this.intoxService.getPage(page);
+        let page_find_topic = await this.topicService.getPage(page);
         for (let i = 0; i < page_find_fact.length; i++) {
             page_find_fact[i].title = page_find_fact[i].title[lang];
             page_find_fact[i].content = page_find_fact[i].content[lang];
@@ -53,6 +55,7 @@ export class CardsController {
         let page_find = []
         page_find = page_find.concat(page_find_fact)
         page_find = page_find.concat(page_find_intox)
+        page_find = page_find.concat(page_find_topic)
         return shuffleList(page_find);
     }
 }
