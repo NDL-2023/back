@@ -42,7 +42,7 @@ export class CardsController {
     
         let page_find_fact = await this.factService.getPage(page);
         let page_find_intox = await this.intoxService.getPage(page);
-        let page_find_topic = await this.topicService.getPage(page);
+        let page_find_topic = await this.topicService.getPage(page) as any;
         for (let i = 0; i < page_find_fact.length; i++) {
             page_find_fact[i].title = page_find_fact[i].title[lang];
             page_find_fact[i].content = page_find_fact[i].content[lang];
@@ -51,6 +51,9 @@ export class CardsController {
             page_find_intox[i].title = page_find_intox[i].title[lang];
             page_find_intox[i].content = page_find_intox[i].content[lang];
             page_find_intox[i].explanation = page_find_intox[i].explanation[lang];
+        }
+        for (let i = 0; i < page_find_topic.length; i++) {
+            page_find_topic[i].type = TypeCard.TOPIC
         }
         let page_find = []
         page_find = page_find.concat(page_find_fact)
