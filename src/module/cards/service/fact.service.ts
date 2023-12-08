@@ -37,8 +37,8 @@ export class FactService {
 
     async getPage(page: number): Promise<cardsParameters[]> {
         let fact_find = await this.factsRepository.find({ 
-            take: 10,
-            skip: 10 * (page - 1),
+            take: 4,
+            skip: 4 * (page - 1),
         }) as unknown as cardsParameters[];
         for (let i = 0; i < fact_find.length; i++) {
             fact_find[i].type = TypeCard.FACT;
