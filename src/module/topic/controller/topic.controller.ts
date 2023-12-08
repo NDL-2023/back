@@ -54,7 +54,12 @@ export class TopicController {
 
     @Get('?')
     async findOne(@Query('id') id: number){
-        return this.topicSerice.findAll()
+        let topic = await this.topicSerice.findOne(id) 
+        let reply = await this.replyService.find(topic)
+        let res = {
+            topic: topic,
+            reply: reply
+        }
+        return res
     }
-
 }
