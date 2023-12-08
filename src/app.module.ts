@@ -6,6 +6,7 @@ import { HttpModule } from '@nestjs/axios';
 import { CommonModule } from './common/common.module';
 import { AuthModule } from './module/auth/auth.module';
 import { CardsModule } from './module/cards/cards.module';
+import { TopicModule } from './module/topic/topic.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { CardsModule } from './module/cards/cards.module';
     HttpModule,
     AuthModule,
     CommonModule,
-    CardsModule
+    CardsModule,
+    TopicModule
   ],
   controllers: [AppController],
   providers: [],
