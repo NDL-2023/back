@@ -1,16 +1,27 @@
-import { Body, Controller, Get, Post, Query } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Get, HttpException, HttpStatus, Post, Query, Request, UseGuards } from "@nestjs/common";
+import { ApiHeader, ApiTags, ApiUnauthorizedResponse } from "@nestjs/swagger";
 import { FactService } from "../service/fact.service";
 import { TypeCard, cardsParameters } from "../dtos/cards-parameters";
 import { pageParameters } from "../dtos/pageParameters";
+import { JwtAuthGuard } from "../../../common/guards/jwt-auth.guard";
 
 @ApiTags('cards')
 @Controller('cards')
 export class CardsController {
     constructor(private factService: FactService) {}
 
+    @UseGuards(JwtAuthGuard)
     @Post('create')
-    async create(@Body() params: cardsParameters) {
+    @ApiHeader({
+        name: 'Authorization',
+        description: 'Bearer <token>',
+    })
+    @ApiUnauthorizedResponse({ description: 'Unauthorized' })
+    async create(@Request() req, @Body() params: cardsParameters) {
+        if (!req.user.isAdmin) {
+            throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
+        }
+
         if (params.type === 'fact') {
             return this.factService.create(params);
         }
