@@ -51,8 +51,8 @@ export class CardsController {
             page_find_intox[i].explanation = page_find_intox[i].explanation[lang];
         }
         let page_find = []
-        page_find.push(page_find_fact)
-        page_find.push(page_find_intox)
+        page_find = page_find.concat(page_find_fact)
+        page_find = page_find.concat(page_find_intox)
         return shuffleList(page_find);
     }
 }
