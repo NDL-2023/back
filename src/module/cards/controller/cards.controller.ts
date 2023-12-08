@@ -1,13 +1,14 @@
-import { Body, Controller, Get, Post, Query } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Get, HttpException, HttpStatus, Post, Query, Request, UseGuards } from "@nestjs/common";
+import { ApiHeader, ApiTags, ApiUnauthorizedResponse } from "@nestjs/swagger";
 import { FactService } from "../service/fact.service";
 import { TypeCard, cardsParameters } from "../dtos/cards-parameters";
 import { pageParameters } from "../dtos/pageParameters";
+import { JwtAuthGuard } from "../../../common/guards/jwt-auth.guard";
 import { Intox } from "../entity/intox.entity";
 import { IntoxService } from "../service/intox.services";
 
 function shuffleList<T>(list: T[]): T[] {
-  return list.slice().sort(() => Math.random() - 0.5);
+    return list.slice().sort(() => Math.random() - 0.5);
 }
 
 @ApiTags('cards')
@@ -15,8 +16,18 @@ function shuffleList<T>(list: T[]): T[] {
 export class CardsController {
     constructor(private factService: FactService,private intoxService: IntoxService) {}
 
+    @UseGuards(JwtAuthGuard)
     @Post('create')
-    async create(@Body() params: cardsParameters) {
+    @ApiHeader({
+        name: 'Authorization',
+        description: 'Bearer <token>',
+    })
+    @ApiUnauthorizedResponse({ description: 'Unauthorized' })
+    async create(@Request() req, @Body() params: cardsParameters) {
+        if (!req.user.isAdmin) {
+            throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
+        }
+
         if (params.type === 'fact') {
             return this.factService.create(params);
         }
