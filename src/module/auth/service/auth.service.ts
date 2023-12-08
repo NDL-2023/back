@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { AuthPayload } from '../dtos/auth-payload';
 import * as bcrypt from 'bcrypt';
 import { UserService } from '../../user/service/user.service';
@@ -10,6 +10,7 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
+    private readonly looger: Logger,
   ) {}
 
   async register(login: string, password: string): Promise<AuthPayload> {
@@ -28,6 +29,7 @@ export class AuthService {
         login: res.login,
       };
     } catch (error) {
+      this.looger.error(error);
       throw new HttpException('User already exist', HttpStatus.NOT_ACCEPTABLE);
     }
 
