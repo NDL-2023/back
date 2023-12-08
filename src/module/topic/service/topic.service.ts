@@ -21,12 +21,20 @@ export class TopicService {
         }
         return this.topicRepository.save(topic)
     }
-    
+
     async findOne(id: number){
         return this.topicRepository.findOneBy({id: id})
     }
 
     async findAll(){
         return this.topicRepository.find()
+    }
+
+    async getPage(page: number){
+        let fact_find = await this.topicRepository.find({ 
+            take: 10,
+            skip: 10 * (page - 1),
+        }) as unknown as topicParameters[];
+        return fact_find
     }
 }
